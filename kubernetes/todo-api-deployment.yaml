@@ -31,6 +31,8 @@ spec:
             - name: MONGO_URI
               value: mongodb://mongo:27017/todosDB
           image: todo-api
+          command: ["npm"]
+          args: ["run", "start-prod"]
           name: todo-api
           ports:
             - containerPort: 5000
