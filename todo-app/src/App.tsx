@@ -33,10 +33,10 @@ function App() {
   };
 
   return (
-    <>
+    <div style={{ margin: "2rem" }}>
       <NewTodo onAddTodo={addTodo} />
       <TodoList todos={todos} onDelete={deleteTodo} onComplete={completeTodo} />
-    </>
+    </div>
   );
 }
 
