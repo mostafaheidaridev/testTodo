@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#Run: bash kubernetes.deployment.sh
+
 # Apply all Kubernetes configurations from the directory
 kubectl apply -f kubernetes/
 
@@ -10,26 +12,26 @@ wait_for_pod() {
   kubectl wait --for=condition=ready pod -l $label --timeout=120s
 }
 
-# Wait for the mongo-service pod to be ready
-wait_for_pod "io.kompose.service=mongo"
+# Wait for the mongo pod to be ready
+wait_for_pod "app=mongo"
 
-# Port forward for mongo-service
-kubectl port-forward svc/mongo-service 27018:27017 &
+# Port forward for mongo service
+kubectl port-forward svc/mongo 27018:27017 &
 MONGO_PORT_FORWARD_PID=$!
-echo "Port forwarding for mongo-service set up on port 27018."
+echo "Port forwarding for mongo set up on port 27018."
 
 # Wait for the todo-app pod to be ready
-wait_for_pod "io.kompose.service=todo-app"
+wait_for_pod "app=todo-app"
 
-# Port forward for todo-app
+# Port forward for todo-app service
 kubectl port-forward svc/todo-app 3000:3000 &
 TODO_APP_PORT_FORWARD_PID=$!
 echo "Port forwarding for todo-app set up on port 3000."
 
 # Wait for the todo-api pod to be ready
-wait_for_pod "io.kompose.service=todo-api"
+wait_for_pod "app=todo-api"
 
-# Port forward for todo-api
+# Port forward for todo-api service
 kubectl port-forward svc/todo-api 5000:5000 &
 TODO_API_PORT_FORWARD_PID=$!
 echo "Port forwarding for todo-api set up on port 5000."
