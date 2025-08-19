@@ -1,0 +1,32 @@
+name: Todo App - Build, Test, Push image to Docker Hub
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "todo-app/**" # Trigger if files in todo-app/ folder change
+
+  workflow_dispatch: # Allows you to manually run the workflow from the Actions tab
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }} # Store your Docker Hub username in GitHub Secrets
+          password: ${{ secrets.DOCKER_PASSWORD }} # Store your Docker Hub password/token in GitHub Secrets
+
+      # Build Docker image for todo-app
+      - name: Build Docker image for todo-app
+        run: docker build -t pesekt1/todo-app:latest ./todo-app
+
+      # Push Docker image to Docker Hub
+      - name: Push Docker image for todo-app
+        run: docker push pesekt1/todo-app:latest
