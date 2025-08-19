@@ -33,3 +33,9 @@ bash kubernetes.deployment.sh
 ```
 
 All the services are port-forwarded to localhost, so we can access them via http://localhost:3000 for the todo-app and http://localhost:5000 for the todo-api. MongoDB is accessible at localhost:27017, for example using MongoDB Compass or any other MongoDB client.
+
+To terminate all services:
+
+```bash
+kubectl delete -f kubernetes/
+```
