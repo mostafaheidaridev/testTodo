@@ -6,7 +6,9 @@ import todoRouter from "./routers/todoRouter";
 import cors from "cors";
 
 dbConnect();
-seed();
+if (process.env.NODE_ENV !== "production") {
+  seed();  //  Only seed locally
+}
 
 const app = express();
 app.use(cors());
