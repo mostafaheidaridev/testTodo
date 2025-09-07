@@ -1,22 +1,20 @@
-# Use a small, modern Node image
-FROM node:20-alpine
+# Use the official Node.js 16 image as a parent image
+FROM node:16
 
-# Work dir in the container
+# Set the working directory inside the container
 WORKDIR /app
 
-# Install deps first (better layer caching)
-COPY package*.json ./
-# ci = clean reproducible install, faster & safer for CI
-RUN npm ci
+# Copy the package.json and package-lock.json files
+COPY package*.json .
 
-# Copy the rest of the source
+# Install dependencies, including devDependencies if needed for running the app
+RUN npm install
+
+# Copy the rest of your application's code
 COPY . .
 
-# Build TypeScript -> dist/
-RUN npm run build
-
-# Expose the port your server uses
+# Make port 5000 available to the world outside this container
 EXPOSE 5000
 
-# Run the compiled server (production, no nodemon)
-CMD ["node", "dist/index.js"]
+# Define the command to run your app using CMD which defines your runtime
+CMD ["npm", "start"]
