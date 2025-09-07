@@ -14,7 +14,7 @@ app.use(express.json());
 app.use("/todos", todoRouter);
 
 app.get("/", (req, res) => {
-  res.send("Hello World!!!!");
+  res.send("Hello World!!!! ⛵");
 });
 
 app.listen(5000, () => {
